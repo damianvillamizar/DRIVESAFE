@@ -41,7 +41,7 @@ def menu_principal():
             data_manager.guardar_datos(datos)
             break
         else:
-            print("❌ Opción no válida. Intente de nuevo.")
+            print(" Opción no válida. Intente de nuevo.")
         
         # Guardado preventivo tras cada operación exitosa
         data_manager.guardar_datos(datos)
