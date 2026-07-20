@@ -3,7 +3,7 @@ import clientes
 import citas
 
 def menu_principal():
-    # Carga inicial de persistencia
+      
     datos = data_manager.cargar_datos()
 
     while True:
@@ -43,7 +43,7 @@ def menu_principal():
         else:
             print(" Opción no válida. Intente de nuevo.")
         
-        # Guardado preventivo tras cada operación exitosa
+        
         data_manager.guardar_datos(datos)
 
 if __name__ == "__main__":

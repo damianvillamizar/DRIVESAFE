@@ -27,7 +27,6 @@ def registrar_instructor(datos):
     nombre = input("Nombre completo: ").strip()
     especialidad = input("Especialidad (moto/carro): ").strip().lower()
     
-    # Validación corregida de 'especialidad'
     if especialidad not in ["moto", "carro"]:
         print(" Especialidad inválida. Debe ser 'moto' o 'carro'.")
         return

@@ -3,37 +3,31 @@ from datetime import datetime
 def programar_cita(datos):
     print("\n--- PROGRAMAR CITA DE PRÁCTICA ---")
     
-    # Validar Cliente
     doc_cliente = input("Documento del Cliente: ").strip()
     if doc_cliente not in datos["clientes"]:
         print(" Cliente no encontrado. Regístrelo primero.")
         return
     cliente = datos["clientes"][doc_cliente]
 
-    # Validar Instructor
     doc_inst = input("Documento del Instructor: ").strip()
     if doc_inst not in datos["instructores"]:
         print(" Instructor no encontrado.")
         return
     instructor = datos["instructores"][doc_inst]
 
-    # Validar Vehículo
     placa = input("Placa del Vehículo: ").strip().upper()
     if placa not in datos["vehiculos"]:
         print(" Vehículo no encontrado.")
         return
     vehiculo = datos["vehiculos"][placa]
 
-    # Validación de Coherencia de Tipo (Ej: No asignar moto a práctica de carro)
     if cliente["tipo_vehiculo"] != instructor["especialidad"] or cliente["tipo_vehiculo"] != vehiculo["tipo"]:
         print(" Conflicto: El tipo de vehículo del cliente, la especialidad del instructor y el vehículo deben coincidir.")
         return
 
-    # Validar Fecha y Hora
     fecha_str = input("Fecha (DD/MM/AAAA): ").strip()
     hora_str = input("Hora (HH:MM, formato 24h): ").strip()
     try:
-        # Validación de formato básico
         datetime.strptime(f"{fecha_str} {hora_str}", "%d/%m/%Y %H:%M")
     except ValueError:
         print(" Formato de fecha u hora inválido.")
@@ -41,7 +35,6 @@ def programar_cita(datos):
 
     duracion = input("Duración en horas (Ej: 1 o 2): ").strip()
 
-    # Verificar cruces de horario básicos (Mismo instructor o vehículo a la misma hora/fecha)
     for cita in datos["citas"]:
         if cita["fecha"] == fecha_str and cita["hora"] == hora_str:
             if cita["doc_instructor"] == doc_inst:
@@ -51,7 +44,6 @@ def programar_cita(datos):
                 print(" El vehículo ya está asignado a otra cita a esa hora.")
                 return
 
-    # Crear cita
     nueva_cita = {
         "id_cita": len(datos["citas"]) + 1,
         "doc_cliente": doc_cliente,
