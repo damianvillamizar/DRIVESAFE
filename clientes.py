@@ -60,7 +60,6 @@ def registrar_instructor(datos):
 def registrar_vehiculo(datos):
     print("\n--- REGISTRO DE VEHÍCULO ---")
     
-    # Patrón: Exactamente 3 letras mayúsculas seguidas de 3 números
     patron_placa = r"^[A-Z]{3}[0-9]{3}$"
     
     while True:
