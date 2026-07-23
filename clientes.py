@@ -1,6 +1,17 @@
+import re
+
 def registrar_cliente(datos):
     print("\n--- REGISTRO DE CLIENTE ---")
-    doc = input("Documento de identidad (Único): ").strip()
+    
+    while True:
+        doc = input("Documento de identidad (Único, solo números entre 6 y 12 dígitos): ").strip()
+        if not doc.isdigit():
+            print(" Error: El documento debe contener únicamente números.")
+        elif not (6 <= len(doc) <= 12):
+            print(" Error: El documento debe tener entre 6 y 12 caracteres.")
+        else:
+            break
+
     if doc in datos["clientes"]:
         print(" Error: Ya existe un cliente registrado con este documento.")
         return
@@ -19,7 +30,16 @@ def registrar_cliente(datos):
 
 def registrar_instructor(datos):
     print("\n--- REGISTRO DE INSTRUCTOR ---")
-    doc = input("Documento de identidad (Único): ").strip()
+    
+    while True:
+        doc = input("Documento de identidad (Único, solo números entre 6 y 12 dígitos): ").strip()
+        if not doc.isdigit():
+            print(" Error: El documento debe contener únicamente números.")
+        elif not (6 <= len(doc) <= 12):
+            print(" Error: El documento debe tener entre 6 y 12 caracteres.")
+        else:
+            break
+
     if doc in datos["instructores"]:
         print(" Error: Ya existe un instructor con este documento.")
         return
@@ -39,10 +59,20 @@ def registrar_instructor(datos):
 
 def registrar_vehiculo(datos):
     print("\n--- REGISTRO DE VEHÍCULO ---")
-    placa = input("Placa del vehículo (Única): ").strip().upper()
-    if placa in datos["vehiculos"]:
-        print(" Error: Ya existe un vehículo con esta placa.")
-        return
+    
+    # Patrón: Exactamente 3 letras mayúsculas seguidas de 3 números
+    patron_placa = r"^[A-Z]{3}[0-9]{3}$"
+    
+    while True:
+        placa = input("Placa del vehículo (Ejemplo: HAX189): ").strip().upper()
+        
+        if not re.match(patron_placa, placa):
+            print(" Error: Formato de placa inválido. Debe tener 3 letras seguidas de 3 números (Ej: HAX189).")
+        elif placa in datos["vehiculos"]:
+            print(" Error: Ya existe un vehículo registrado con esta placa.")
+            return
+        else:
+            break
     
     tipo = input("Tipo de vehículo (moto/carro): ").strip().lower()
     if tipo not in ["moto", "carro"]:
