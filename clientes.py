@@ -59,24 +59,35 @@ def registrar_instructor(datos):
 
 def registrar_vehiculo(datos):
     print("\n--- REGISTRO DE VEHÍCULO ---")
-    
-    patron_placa = r"^[A-Z]{3}[0-9]{3}$"
-    
+
+    patron_placa_carro = r"^[A-Z]{3}[0-9]{3}$"
+    patron_placa_moto = r"^[A-Z]{3}[0-9]{2}[A-Z]{1}$"
+
     while True:
-        placa = input("Placa del vehículo (Ejemplo: HAX189): ").strip().upper()
-        
-        if not re.match(patron_placa, placa):
-            print(" Error: Formato de placa inválido. Debe tener 3 letras seguidas de 3 números (Ej: HAX189).")
+        tipo = input("QUE VEHICULO DESEAS INGRESAR (carro/moto): ").strip().lower()
+        if tipo in ["carro", "moto"]:
+            break
+        print(" Error: Opción inválida. Escribe 'carro' o 'moto'.")
+
+    if tipo == "carro":
+        patron = patron_placa_carro
+        ejemplo = "HAX189"
+    else:
+        patron = patron_placa_moto
+        ejemplo = "HAX18A"
+
+    while True:
+        placa = input(f"Placa del vehículo ({tipo}) Ejemplo: {ejemplo}: ").strip().upper()
+
+        if not re.match(patron, placa):
+            print(" Error: Formato de placa inválido.")
         elif placa in datos["vehiculos"]:
             print(" Error: Ya existe un vehículo registrado con esta placa.")
             return
         else:
+            datos["vehiculos"][placa] = {"tipo": tipo}
+            print(f" Vehículo ({tipo}) con placa {placa} registrado con éxito.")
             break
-    
-    tipo = input("Tipo de vehículo (moto/carro): ").strip().lower()
-    if tipo not in ["moto", "carro"]:
-        print(" Tipo inválido. Debe ser 'moto' o 'carro'.")
-        return
     
     datos["vehiculos"][placa] = {
         "tipo": tipo,
